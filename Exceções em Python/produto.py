@@ -1,29 +1,43 @@
 class Produto:
 
-    def __init__(self, produto, quantidade):
+    def __init__(self, nome, quantidade):
 
-        self.produto = produto
+        self.nome = nome
         self.quantidade = quantidade 
 
     
-    def remover(self, produto, quantidade):
+    def criar_prod(self):
+
+        nome = input("Qual o produto? ")
+        quantidade = input("Quanto temos do produto? ")
+
+        return nome, quantidade
+
+    def remover(self, nome, quantidade, qtr):
 
         try:
 
-            qt = int(input("Digite a quantidade que você deseja retirar do produto: "))
+            if qt < quantidade:
 
-        except Exception as error:
+                print("Quantidade retirada com sucesso")
 
-            print(error.__class__)
+        except:
 
-
-pr1 = Produto("Teclado", 10)
-
-try:
-
-    Produto.remover(pr1, 10)
-
-except Exception as error:
+            print("A quatidade pedida excede a quantidade disponivel")
 
 
-    print("O erro foi:", error)
+
+
+op = int(input("O que voce quer?\n1) Adicionar Produto\n2) Remover Produto\n "))
+pr1 = Produto("", 0)
+if op == 1:
+
+    pr1.criar_prod()
+    
+elif op == 2:
+
+    qtr = int(input("Quanto deseja remover? "))
+    pr1.remover()
+
+
+pr1 = Produto(nome, quantidade)
