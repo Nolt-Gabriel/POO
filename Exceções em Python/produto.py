@@ -40,4 +40,6 @@ elif op == 2:
     pr1.remover()
 
 
+
 pr1 = Produto(nome, quantidade)
+print("teste")
