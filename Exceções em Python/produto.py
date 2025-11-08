@@ -1,45 +1,37 @@
+class QuantidadeIndisponivelError(Exception):
+    def __init__(self, produto, requisitada, disponivel):
+        super().__init__(
+            f"Não há quantidade suficiente do produto '{produto}'. "
+            f"Solicitada: {requisitada}, Disponível: {disponivel}"
+        )
+
 class Produto:
-
     def __init__(self, nome, quantidade):
-
         self.nome = nome
-        self.quantidade = quantidade 
+        self.quantidade = quantidade
 
-    
-    def criar_prod(self):
+class Estoque:
+    def __init__(self):
+        self.produtos = {}
 
-        nome = input("Qual o produto? ")
-        quantidade = input("Quanto temos do produto? ")
+    def adicionar(self, produto):
+        self.produtos[produto.nome] = produto
 
-        return nome, quantidade
+    def remover(self, nome_produto, quantidade):
+        if nome_produto not in self.produtos:
+            raise ValueError("Produto não encontrado no estoque.")
+        produto = self.produtos[nome_produto]
+        if quantidade > produto.quantidade:
+            raise QuantidadeIndisponivelError(produto.nome, quantidade, produto.quantidade)
+        produto.quantidade -= quantidade
+        print(f"{quantidade} unidade(s) de {produto.nome} removida(s). Restam {produto.quantidade}.")
 
-    def remover(self, nome, quantidade, qtr):
+# Demonstração do uso do try/except
+estoque = Estoque()
+p1 = Produto("Sabonete", 5)
+estoque.adicionar(p1)
 
-        try:
-
-            if qt < quantidade:
-
-                print("Quantidade retirada com sucesso")
-
-        except:
-
-            print("A quatidade pedida excede a quantidade disponivel")
-
-
-
-
-op = int(input("O que voce quer?\n1) Adicionar Produto\n2) Remover Produto\n "))
-pr1 = Produto("", 0)
-if op == 1:
-
-    pr1.criar_prod()
-    
-elif op == 2:
-
-    qtr = int(input("Quanto deseja remover? "))
-    pr1.remover()
-
-
-
-pr1 = Produto(nome, quantidade)
-print("teste")
+try:
+    estoque.remover("Sabonete", 10)
+except QuantidadeIndisponivelError as e:
+    print("Erro tratado:", e)
