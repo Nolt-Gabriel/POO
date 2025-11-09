@@ -1,10 +1,3 @@
-class QuantidadeIndisponivelError(Exception):
-    def __init__(self, produto, requisitada, disponivel):
-        super().__init__(
-            f"Não há quantidade suficiente do produto '{produto}'. "
-            f"Solicitada: {requisitada}, Disponível: {disponivel}"
-        )
-
 class Produto:
     def __init__(self, nome, quantidade):
         self.nome = nome
@@ -22,7 +15,10 @@ class Estoque:
             raise ValueError("Produto não encontrado no estoque.")
         produto = self.produtos[nome_produto]
         if quantidade > produto.quantidade:
-            raise QuantidadeIndisponivelError(produto.nome, quantidade, produto.quantidade)
+            raise ValueError(
+                f"Não há quantidade suficiente do produto '{produto.nome}'. "
+                f"Solicitada: {quantidade}, Disponível: {produto.quantidade}"
+            )
         produto.quantidade -= quantidade
         print(f"{quantidade} unidade(s) de {produto.nome} removida(s). Restam {produto.quantidade}.")
 
@@ -33,5 +29,5 @@ estoque.adicionar(p1)
 
 try:
     estoque.remover("Sabonete", 10)
-except QuantidadeIndisponivelError as e:
+except ValueError as e:
     print("Erro tratado:", e)
