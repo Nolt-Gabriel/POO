@@ -1,13 +1,15 @@
 class Votacao:
     def __init__(self, nome_v):
+         
         self.nome_v = nome_v
         self.votos = {"João": 0, "Maria": 0, "Juliana": 0}
         self.status = False
 
     def stats(self):
         print("-"*30)
-        print(" "*15, "Status da votação:", self.status)
+        print(" "*5, "Status da votação:", self.status)
         print("-"*30)
+
         if not self.status:
             op = input("Deseja Ativar a votação? y/n\n")
             if op == "y":
@@ -71,6 +73,7 @@ class Votacao:
                     break
                 else:
                     print("Opção inválida!")
+
             except ValueError:
                 print("Digite apenas números válidos")
 
