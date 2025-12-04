@@ -24,7 +24,7 @@ class VideoGame:
 
     def jogar(self):
 
-        print("Estou jogando PS5")
+        print(f"Estou jogando {self.nome}")
 
 crianca = Crianca("Arthur")
 videogame = VideoGame("PS5")
